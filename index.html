@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Cal - CodeWord</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+
+
+            --background-color: rgb(29, 29, 62);
+            --output-background-color: rgb(33, 33, 62);
+            --button-container-bg: rgb(81, 89, 123);
+            --button-hover-text-color: rgb(0, 255, 0);
+            --button-text-color: white;
+            --operator-button-text-color: rgb(247, 243, 0);
+            --output-font: 'Black Ops One', cursive;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--background-color);
+
+        }
+
+        .container {
+            height: 48rem;
+            width: 40rem;
+            background: var(--button-container-bg);
+            border-radius: .5rem;
+            box-shadow: 0rem 0rem 1rem rgb(34, 34, 34), 0rem 0rem 2rem rgb(76, 76, 76);
+
+        }
+
+        .container .output {
+            height: 13rem;
+            width: 100%;
+            /* background:var(--output-background-color); */
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: .5rem .5rem 0 0;
+        }
+
+        .container .output input {
+            height: 80%;
+            width: 93%;
+            background-color: transparent;
+            border: 0;
+            outline: none;
+            font-size: 4rem;
+            overflow-x: auto;
+            display: flex;
+            align-items: center;
+            color: white;
+            padding-left: 1rem;
+            background-color: rgb(39, 39, 39);
+            font-family: var(--output-font);
+            border-radius: .5rem;
+            ;
+        }
+
+        .container .output input::placeholder {
+            font-size: 5rem;
+            letter-spacing: .4rem;
+            padding: 0;
+            margin: 0;
+        }
+
+        .buttons {
+            height: 32rem;
+            width: 100%;
+            border-radius: 0 0 .5rem .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding-bottom: rem;
+        }
+
+        .buttons .buttons-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .buttons .buttons-row input {
+            position: relative;
+            width: 8rem;
+            height: 5rem;
+            margin: .5rem;
+            border: 0;
+            border-radius: .5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            outline: none;
+            color: var(--button-text-color);
+            box-shadow: -.5rem -.5rem 1rem rgba(0, 0, 0, 0.3),
+                .5rem .5rem 1rem rgba(255, 255, 255, 0.1);
+        }
+
+        .buttons .buttons-row input::after {
+            content: '';
+            position: absolute;
+            height: 50%;
+            width: 100%;
+            background: white;
+        }
+
+        .buttons .buttons-row input:active {
+            animation: animateBtn 1s linear;
+            color: var(--button-hover-text-color);
+        }
+
+        @keyframes animateBtn {
+            0% {
+                transform: scale(.95);
+            }
+
+            10% {
+                transform: scale(1);
+            }
+        }
+
+        .buttons .buttons-row .operators {
+            color: var(--operator-button-text-color);
+        }
+
+        #equal {
+            width: 17rem;
+        }
+
+        #multiply {
+            font-size: 4rem;
+            padding-top: .8rem;
+        }
+
+        .branding {
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 1rem;
+        }
+
+        .solar {
+            position: relative;
+            height: 3rem;
+            width: 13rem;
+            border-radius: .5rem;
+            margin-top: 1.5rem;
+            margin-left: 1rem;
+            background: rgb(0, 27, 7);
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .solar::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            height: .2rem;
+            width: 100%;
+            background: rgba(192, 192, 192, 0.583);
+        }
+
+        .solar span {
+            height: 3rem;
+            width: .2rem;
+            background-color: rgba(255, 127, 80, 0.298);
+
+        }
+
+        .solar::before {
+            content: "";
+            position: absolute;
+
+            height: 40%;
+            width: 98%;
+            margin: 1%;
+            background: rgba(192, 192, 192, 0.283);
+            border-radius: .5rem .5rem 0 0;
+        }
+
+
+        .creater {
+            font-size: 1.8rem;
+            font-style: italic;
+            text-shadow: -.2rem -.2rem .1rem rgba(132, 0, 0, 0.445);
+            font-family: var(--output-font);
+            margin-top: 1.5rem;
+            margin-right: 2rem;
+
+
+        }
+
+
+        @media screen and (max-width:500px){
+            body{
+                height:fit-content;
+                overflow-y: auto;
+                padding: 0;
+            }
+            .container {
+                min-height: 100vh;
+                width: 100vw;
+                height: fit-content;
+                background: var(--button-container-bg);
+                border-radius: .5rem;
+                box-shadow: 0rem 0rem 1rem rgb(34, 34, 34), 0rem 0rem 2rem rgb(76, 76, 76);
+
+            }
+
+            .container .output {
+                height: 30vh;
+            }
+            .container .output input::placeholder {
+                font-size: 3rem;
+            }
+
+            .branding {
+                height: 5rem;
+            }
+
+            .buttons {
+                height: calc(70vh - 5rem);
+                /* background-color: black; */
+            }
+
+            .buttons .buttons-row input {
+                width: 7rem;
+                height: 7rem;
+                border-radius: 50%;
+            }
+
+            #equal {
+                width: 15rem;
+                border-radius: 5rem;
+            }
+
+            #multiply {
+                padding-top: 1.8rem;
+                padding-left: .3rem;
+            }
+        }
+
+        @media screen and (max-width:350px) {
+
+            .buttons .buttons-row input {
+                width: 6rem;
+                height: 6rem;
+                border-radius: 50%;
+            }
+
+            .container .output input {
+                font-size: 3rem;
+                letter-spacing: .2rem;
+            }
+
+            #equal {
+                width: 13rem;
+                border-radius: 5rem;
+            }
+
+            #multiply {
+                font-size: 3rem;
+                padding: 1rem 0 0 0;
+            }
+
+            .branding {
+                justify-content: center;
+            }
+
+            .creater {
+                margin-right: 0;
+            }
+
+            .buttons .buttons-row input {
+                font-size: 2rem;
+            }
+
+            .solar {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width:280px) {
+
+            .buttons .buttons-row input {
+                width: 4rem;
+                height: 4rem;
+                border-radius: 50%;
+            }
+
+            #equal {
+                width: 9rem;
+                border-radius: 5rem;
+            }
+
+            #multiply {
+                font-size: 2rem;
+                padding: 1rem 0 0 0;
+            }
+
+            .branding {
+                justify-content: center;
+            }
+
+            .buttons .buttons-row input {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media screen and (max-width:150px) {
+
+            .buttons .buttons-row input {
+                width: 1.5rem;
+                height: 1.5rem;
+                border-radius: 50%;
+                font-size: .6rem;
+            }
+
+            #equal {
+                width: 5rem;
+                border-radius: 5rem;
+            }
+
+            #multiply {
+                font-size: .8rem;
+                padding: 0;
+            }
+            .container .output input {
+                font-size: 1rem;
+                letter-spacing: .2rem;
+            }
+
+            .creater {
+                font-size: 1rem;
+            }
+
+           
+
+        }
+        @media screen and (max-height:650px) and (max-width:500px){
+            .buttons {
+                height: fit-content;
+                /* background-color: black; */
+            }
+        }
+        @media screen and (max-height:500px) and (min-width:500px){
+            body{
+                height: fit-content;
+                
+                overflow: auto;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form">
+            <div class="output">
+                <input name="output" autofocus placeholder="000000000">
+            </div>
+            <div class="branding">
+                <div class="solar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="creater">
+                    Rahul Ji Ara
+                </div>
+            </div>
+            <div class="buttons">
+                <div class="buttons-row">
+                    <input type="button" value="AC" class="operators">
+                    <input type="button" value="DE" class="operators">
+                    <input type="button" value=".">
+                    <input type="button" value="/" class="operators">
+                </div>
+                <div class="buttons-row">
+                    <input type="button" value="7">
+                    <input type="button" value="8">
+                    <input type="button" value="9">
+                    <input type="button" value="*" id="multiply" class="operators">
+                </div>
+                <div class="buttons-row">
+                    <input type="button" value="4">
+                    <input type="button" value="5">
+                    <input type="button" value="6">
+                    <input type="button" value="-" class="operators">
+                </div>
+                <div class="buttons-row">
+                    <input type="button" value="1">
+                    <input type="button" value="2">
+                    <input type="button" value="3">
+                    <input type="button" value="+" class="operators">
+                </div>
+                <div class="buttons-row">
+                    <input type="button" value="00">
+                    <input type="button" value="0">
+                    <input type="button" value="=" id="equal" class="operators">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let value = ""
+        let calculate = document.getElementById("equal");
+        let btnValue = document.querySelectorAll("input[type= button]")
+        let output = document.querySelector("input[name= output]")
+
+
+        /* 
+            We made array from all button we selected the we put these buttons into a forEach loop to seperate/
+            identify buttons then we add click event. Now we can identify which button is clicked 
+        */
+        Array.from(btnValue).forEach((button) => {
+
+
+
+
+            button.addEventListener("click", (e) => {
+                output.style.color = "white"
+
+
+
+                try {
+                    if (e.target.value == "=") {
+                        value = eval(value)
+                        output.style.color = "var(--operator-button-text-color)"
+                        if (value == "Infinity") {
+                            value = "∞"
+                            output.value = value
+                        }
+                        else if (value === undefined) {
+                            value = ""
+                            output.value = value
+                        }
+                        else {
+                            output.value = value
+                        }
+                        if (e.target.value == "%") {
+
+                            value = eval(value)
+                            output.value = value
+                        }
+                    }
+                    else if (e.target.value == "AC") {
+                        value = ""
+                        output.value = value
+                    }
+                    else if (e.target.value == "DE") {
+                        value = output.value.slice(0, -1)
+                        output.value = value
+                    }
+
+
+
+                    else {
+                        value = value + e.target.value
+                        output.value = value
+
+                    }
+                } catch (error) {
+                    value = ""
+                    output.value = "Error"
+                    output.style.fontSize = "2rem"
+                    output.style.textAlign = "center"
+                    output.style.paddingLeft = "0"
+                    output.style.color = "red"
+
+                    setTimeout(() => {
+                        output.value = ""
+                        output.style.textAlign = "left"
+                        output.style.fontSize = "4rem"
+                        output.style.paddingLeft = "1rem"
+                    }, 3000)
+
+                }
+
+            })
+        })
+        output.innerHTML = btnValue
+
+    </script>
+</body>
+
+</html>
